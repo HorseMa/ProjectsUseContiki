@@ -756,8 +756,8 @@ void reConfigPktHandler(void)
   Pro2Cmd[10] = 0x01;
   Pro2Cmd[11] = 0x04;
   Pro2Cmd[12] = 0x00;
-  Pro2Cmd[13] = 0x00;
-  Pro2Cmd[14] = 0x80;
+  Pro2Cmd[13] = 0x1F;
+  Pro2Cmd[14] = 0xFF;
   Pro2Cmd[15] = 0x00;
 
 
