@@ -170,6 +170,14 @@ U8 bRadio_Check_Tx_RX(void)
         si446x_fifo_info(0x00);
         if(radio_pkg_rx != NULL)
         {
+            if(Si446xCmd.FIFO_INFO.RX_FIFO_COUNT + radio_pkg_rx->offset > BUF_SIZE)
+            {
+              pktbuf_free(radio_pkg_rx);
+              reConfigPktHandler();
+              vRadio_StartRX(0,0);
+              ledTurnOff();
+              return 0;
+            }
             si446x_read_rx_fifo(Si446xCmd.FIFO_INFO.RX_FIFO_COUNT, &radio_pkg_rx->data[radio_pkg_rx->offset]);
             radio_pkg_rx->offset += Si446xCmd.FIFO_INFO.RX_FIFO_COUNT;
         }
@@ -180,9 +188,17 @@ U8 bRadio_Check_Tx_RX(void)
         si446x_fifo_info(0x00);
         if(radio_pkg_rx != NULL)
         {
+            if(Si446xCmd.FIFO_INFO.RX_FIFO_COUNT + radio_pkg_rx->offset > BUF_SIZE)
+            {
+              pktbuf_free(radio_pkg_rx);
+              reConfigPktHandler();
+              vRadio_StartRX(0,0);
+              ledTurnOff();
+              return 0;
+            }
             si446x_read_rx_fifo(Si446xCmd.FIFO_INFO.RX_FIFO_COUNT, &radio_pkg_rx->data[radio_pkg_rx->offset]);
             radio_pkg_rx->offset += Si446xCmd.FIFO_INFO.RX_FIFO_COUNT;
-            radio_pkg_rx->len += radio_pkg_rx->offset;
+            radio_pkg_rx->len = radio_pkg_rx->offset;
         }
         ledTurnOff();
         //reConfigPktHandler();
