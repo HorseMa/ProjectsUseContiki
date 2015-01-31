@@ -24,12 +24,10 @@ AUTOSTART_PROCESSES(&blink_process, &checkradio_process,&radio_rcv_process);
 PROCESS_THREAD(blink_process, ev, data)
 { 
   static struct etimer et_blink;
-  vRadio_StartRX(0,0);
   PROCESS_BEGIN();
-
+  vRadio_StartRX(0,0);
   while(1) {
     etimer_set(&et_blink, CLOCK_SECOND);
-    
     PROCESS_WAIT_EVENT_UNTIL(ev == PROCESS_EVENT_TIMER);
     if(!radio_pkg_tx)
     {
