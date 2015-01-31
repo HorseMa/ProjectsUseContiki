@@ -125,7 +125,7 @@ U8 bRadio_Check_Tx_RX(void)
         //si446x_change_state(SI446X_CMD_CHANGE_STATE_ARG_NEW_STATE_ENUM_RX);
         return 0;
       }
-      if (Si446xCmd.GET_INT_STATUS.PH_PEND & SI446X_CMD_GET_INT_STATUS_REP_CRC_ERROR_BIT)
+      if (Si446xCmd.GET_INT_STATUS.PH_PEND & SI446X_CMD_GET_INT_STATUS_REP_CRC_ERROR_PEND_BIT)
       {
       	/* Reset FIFO */
       	si446x_fifo_info(0x03);
@@ -156,7 +156,11 @@ U8 bRadio_Check_Tx_RX(void)
         ledTurnOff();
         return SI446X_CMD_GET_INT_STATUS_REP_PACKET_SENT_PEND_BIT;
       }
-      if(Si446xCmd.GET_MODEM_STATUS.MODEM_PEND & SI446X_CMD_GET_MODEM_STATUS_REP_SYNC_DETECT_BIT)
+      if(Si446xCmd.GET_MODEM_STATUS.MODEM_PEND & SI446X_CMD_GET_MODEM_STATUS_REP_PREAMBLE_DETECT_PEND_BIT)
+      {
+        ledTurnOn();
+      }
+      if(Si446xCmd.GET_MODEM_STATUS.MODEM_PEND & SI446X_CMD_GET_MODEM_STATUS_REP_SYNC_DETECT_PEND_BIT)
       {
         ledTurnOn();
         if(radio_pkg_rx == NULL)
