@@ -283,8 +283,12 @@ extern void clock_isr(void);
   /* In order to detect unexpected events during development,
      it is recommended to set a breakpoint on the following instruction.
   */
+   DISABLE_INTERRUPTS();
+   ENERGEST_ON(ENERGEST_TYPE_IRQ);
    TIM2_ClearFlag(TIM2_FLAG_UPDATE);
    clock_isr();
+   ENERGEST_OFF(ENERGEST_TYPE_IRQ);
+   ENABLE_INTERRUPTS();
  }
 
 /**
