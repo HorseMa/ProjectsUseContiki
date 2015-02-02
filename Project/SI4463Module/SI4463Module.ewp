@@ -138,7 +138,7 @@
         </option>
         <option>
           <name>IccOptLevel</name>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>IccOptStrategy</name>
@@ -147,12 +147,12 @@
         </option>
         <option>
           <name>IccOptLevelSlave</name>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>IccOptAllowList</name>
           <version>0</version>
-          <state>000000</state>
+          <state>100100</state>
         </option>
         <option>
           <name>IccGenerateDebugInfo</name>
@@ -1841,6 +1841,9 @@
   <group>
     <name>Project</name>
     <file>
+      <name>$PROJ_DIR$\global.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\main.c</name>
     </file>
     <file>
@@ -1851,6 +1854,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$\tasks.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\uart.c</name>
     </file>
   </group>
 </project>

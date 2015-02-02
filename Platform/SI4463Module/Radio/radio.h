@@ -10,6 +10,7 @@
 #ifndef RADIO_H_
 #define RADIO_H_
 #include "compiler_defs.h"
+#include "packetsbuf.h"
 /*****************************************************************************
  *  Global Macros & Definitions
  *****************************************************************************/
@@ -48,9 +49,9 @@ extern const U8 Radio_Configuration_Data_Array[];
  *****************************************************************************/
 void  vRadio_Init(void);
 U8    bRadio_Check_Tx_RX(void);
-void  vRadio_StartRX(U8,U8);
+void  vRadio_StartRX(void);
 U8    bRadio_Check_Ezconfig(U16);
-void  vRadio_StartTx_Variable_Packet(U8, U8*, U8);
+void  vRadio_StartTx_Variable_Packet(pst_Packet);
 void radioTxQueueRoutin(void);
 
 #endif /* RADIO_H_ */

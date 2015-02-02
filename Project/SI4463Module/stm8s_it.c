@@ -25,6 +25,7 @@
 #include "stm8s_it.h"
 #include "contiki.h"
 #include "bsp.h"
+#include "global.h"
 /** @addtogroup Template_Project
   * @{
   */
@@ -337,12 +338,31 @@ extern void clock_isr(void);
   * @brief UART1 TX Interrupt routine.
   * @param  None
   * @retval None
-  */
+  */  
  INTERRUPT_HANDLER(UART1_TX_IRQHandler, 17)
  {
     /* In order to detect unexpected events during development,
        it is recommended to set a breakpoint on the following instruction.
     */
+  DISABLE_INTERRUPTS();
+  ENERGEST_ON(ENERGEST_TYPE_IRQ);
+  if(UART1_GetFlagStatus(UART1_FLAG_TXE))
+  {
+    //UART1_ClearFlag(UART1_FLAG_TXE);
+    if(pstUartTxBuf->offset < pstUartTxBuf->len)
+    {
+      UART1_SendData8(pstUartTxBuf->data[pstUartTxBuf->offset ++]);
+    }
+    else
+    {
+      UART1_ITConfig(UART1_IT_TXE, DISABLE);
+      pktbuf_free(pstUartTxBuf);
+      process_post(&uartSend_process,ev_uartSendOver,NULL);
+      pstUartTxBuf = 0;
+    }
+  }
+  ENERGEST_OFF(ENERGEST_TYPE_IRQ);
+  ENABLE_INTERRUPTS();
  }
 
 /**

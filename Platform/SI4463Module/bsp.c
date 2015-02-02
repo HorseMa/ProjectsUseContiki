@@ -1,6 +1,8 @@
 #include "stm8s_conf.h"
 #include "stm8s.h"
 #include "bsp.h"
+#include "global.h"
+#include <string.h>
 
 
 void eepromInit(void)
@@ -115,3 +117,37 @@ void watchdog_periodic(void)
 {
   
 }
+
+void uart_tx_start(pst_Packet pstPacket)
+{
+  UART1_SendData8(pstPacket->data[0]);
+  pstPacket->offset += 1;
+  UART1_ITConfig(UART1_IT_TXE, ENABLE);
+}
+
+void uart_tx(pst_Packet pstPacket)
+{
+  if(pstPacket == NULL);
+  if(pstUartTxBuf != NULL)
+  {
+    list_add(ls_uart_tx,pstPacket);
+  }
+  else
+  {
+    pstUartTxBuf = pstPacket;
+    uart_tx_start(pstUartTxBuf);
+  }
+}
+
+void debug_info_print(char const * str)
+{
+  pst_Packet pstPacket = pktbuf_alloc();
+  if(pstPacket != NULL)
+  {
+    pstPacket->offset = 0;
+    pstPacket->len = strlen(str);
+    memcpy(&pstPacket->data,str,pstPacket->len);
+    uart_tx(pstPacket);
+  }
+}
+

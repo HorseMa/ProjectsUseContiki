@@ -85,7 +85,7 @@ typedef unsigned char process_num_events_t;
 #define PROCESS_NONE          NULL
 
 #ifndef PROCESS_CONF_NUMEVENTS
-#define PROCESS_CONF_NUMEVENTS 32
+#define PROCESS_CONF_NUMEVENTS 15
 #endif /* PROCESS_CONF_NUMEVENTS */
 
 #define PROCESS_EVENT_NONE            0x80

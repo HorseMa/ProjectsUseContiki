@@ -4,6 +4,7 @@
 #include "bsp.h"
 #include "radio.h"
 #include "packetsbuf.h"
+#include "global.h"
 /*---------------------------------------------------------------------------*/
 #if CLOCK_CONF_STACK_FRIENDLY
 extern volatile __bit sleep_flag;
@@ -35,6 +36,7 @@ void main(void)
   rtimer_init();
   vRadio_Init();
   pktbuf_init();
+  globalInit();
   //stack_poison();
 
   /* Init LEDs here */

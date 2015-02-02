@@ -2,8 +2,8 @@
 #define __PACKETS_BUF_H__
 
 
-#define MAX_PACKET_NUM    4
-#define BUF_SIZE          128
+#define MAX_PACKET_NUM    40
+#define BUF_SIZE          10
 
 typedef struct
 {

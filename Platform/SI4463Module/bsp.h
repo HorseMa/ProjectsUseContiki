@@ -3,6 +3,7 @@
 
 #include "stm8s_conf.h"
 #include "stm8s.h"
+#include "packetsbuf.h"
 
 #define ledInit()             GPIO_WriteHigh(GPIOD, GPIO_PIN_2)
 #define ledTurnOn()           GPIO_WriteLow(GPIOD, GPIO_PIN_2)
@@ -20,5 +21,8 @@ void timerInit(void);
 void uartInit(void);
 void watchdog_start(void);
 void watchdog_periodic(void);
+void uart_tx_start(pst_Packet);
 
+#define DEBUG_INFO_PRINT(s) debug_info_print(s)
+  
 #endif
