@@ -358,7 +358,7 @@ extern void clock_isr(void);
       UART1_ITConfig(UART1_IT_TXE, DISABLE);
       pktbuf_free(pstUartTxBuf);
       process_post(&uartSend_process,ev_uartSendOver,NULL);
-      pstUartTxBuf = 0;
+      pstUartTxBuf = NULL;
     }
   }
   ENERGEST_OFF(ENERGEST_TYPE_IRQ);

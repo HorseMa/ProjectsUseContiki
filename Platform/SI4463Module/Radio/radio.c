@@ -108,7 +108,7 @@ void vRadio_Init(void)
 U8 bRadio_Check_Tx_RX(void)
 {
   static pst_Packet radio_pkg_tx = NULL,radio_pkg_rx = NULL;
-  //DEBUG_INFO_PRINT("int\r\n");
+  DEBUG_INFO_PRINT("int\r\n");
   if (radio_hal_NirqLevel() == 0)
   {
       /* Read ITs, clear pending ones */
@@ -225,6 +225,7 @@ U8 bRadio_Check_Tx_RX(void)
         return SI446X_CMD_GET_INT_STATUS_REP_PACKET_RX_PEND_BIT;
       }
 
+
       
 
   }
@@ -259,7 +260,7 @@ void txPoll(void)
 {
   pst_Packet pstPacket;
   enRadioState = RADIO_IN_IDLE;
-  if((pstPacket = list_pop(ls_radio_tx)) == NULL)
+  if((pstPacket = radioGetPktFromTxList()) == NULL)
   {
     vRadio_StartRX();
   }
@@ -282,7 +283,7 @@ void vRadio_StartTx_Variable_Packet(pst_Packet pstPacket)
   {
     if(pstPacket != NULL)
     {
-      list_add(ls_radio_tx,pstPacket);
+      radioAddPktToTxList(pstPacket);
     }
     return;
   }

@@ -28,14 +28,14 @@ PROCESS_THREAD(blink_process, ev, data)
   while(1) {
     etimer_set(&et_blink, CLOCK_SECOND);
     PROCESS_WAIT_EVENT_UNTIL(ev == PROCESS_EVENT_TIMER);
-    pstPacket = pktbuf_alloc();
+    /*pstPacket = pktbuf_alloc();
     if(!pstPacket)
     {
-      for(unsigned char i = 0;i < 20;i ++)
+      for(unsigned char i = 0;i < 13;i ++)
         memcpy(&pstPacket->data[i * 5],"hello",5);
-      pstPacket->len = 5 * 20;
+      pstPacket->len = 5 * 13;
       vRadio_StartTx_Variable_Packet(pstPacket);
-    }
+    }*/
   }
 
   PROCESS_END();
@@ -65,7 +65,7 @@ PROCESS_THREAD(radio_rcv_process, ev, data)
   ev_radio_rcv = process_alloc_event();
   while(1) {
     PROCESS_WAIT_EVENT_UNTIL(ev == ev_radio_rcv);
-    while((pstPacket = list_pop(ls_radio_rx)) != NULL)
+    while((pstPacket = radioGetPktFromRxList()) != NULL)
     {
       /*if(memcmp(pstPacket->data,"hello",5))
         ledToggle();*/
@@ -84,7 +84,11 @@ PROCESS_THREAD(uartSend_process, ev, data)
   while(1)
   {
     PROCESS_WAIT_EVENT_UNTIL(ev == ev_uartSendOver);
-    while((pstUartTxBuf = list_pop(ls_uart_tx)) != NULL)
+    if(pstUartTxBuf != NULL)
+    {
+      continue;
+    }
+    if((pstUartTxBuf = uartGetPktFromTxList()) != NULL)
     {
       uart_tx_start(pstUartTxBuf);
     }

@@ -2,7 +2,7 @@
 #include "stm8s.h"
 #include <string.h>
 
-st_Packet stPacket[MAX_PACKET_NUM];
+struct st_Packet stPacket[MAX_PACKET_NUM];
 
 void pktbuf_init(void)
 {

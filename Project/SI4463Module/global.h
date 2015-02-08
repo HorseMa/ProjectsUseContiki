@@ -53,18 +53,21 @@ extern process_event_t ev_uartRecvPkg;
 extern pst_Packet pstUartTxBuf;
 extern pst_Packet pstUartRxBuf;
 
-
-LIST(ls_radio_tx);
-LIST(ls_radio_rx);
-
-LIST(ls_uart_tx);
-LIST(ls_uart_rx);
-
 void globalInit(void);
 PROCESS_NAME(checkradio_process);
 PROCESS_NAME(radio_rcv_process);
 
 PROCESS_NAME(uartSend_process);
 PROCESS_NAME(uartRecv_process);
+
+
+pst_Packet radioGetPktFromTxList(void);
+void radioAddPktToTxList(pst_Packet pstPacket);
+pst_Packet radioGetPktFromRxList(void);
+void radioAddPktToRxList(pst_Packet pstPacket);
+pst_Packet uartGetPktFromTxList(void);
+void uartAddPktToTxList(pst_Packet pstPacket);
+pst_Packet uartGetPktFromRxList(void);
+void uartAddPktToRxList(pst_Packet pstPacket);
 
 #endif
